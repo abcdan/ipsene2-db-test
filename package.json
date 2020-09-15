@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/abcdan/ipsene2-db-test#readme",
   "dependencies": {
-    "pg": "^8.3.3"
+    "pg": "^8.3.3",
+    "precise-timer": "^1.0.1"
   }
 }
