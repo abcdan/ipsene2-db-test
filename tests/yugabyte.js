@@ -25,6 +25,7 @@ var results = {
   create: -1,
   insert: -1,
   find: -1,
+  selectAll: -1,
   drop: -1,
   total: -1
 }
@@ -49,10 +50,16 @@ client.query(tests.find, (err, res) => {
   results.find = timer.elapsed - (results.insert + results.create)
 })
 
+// Select all the data
+client.query(tests.selectAll, (err, res) => {
+  console.log(err ? err.stack : '')
+  results.selectAll = timer.elapsed - (results.insert + results.create + results.find)
+})
+
 // Drop the table
 client.query(tests.drop, (err, res) => {
   if (err) console.error(err.name)
-  results.drop = timer.elapsed - (results.find + results.insert + results.create)
+  results.drop = timer.elapsed - (results.selectAll + results.find + results.insert + results.create)
   console.log('[RESULTS] Yugabyte'.green)
   results.total = timer.elapsed
   console.table(results)

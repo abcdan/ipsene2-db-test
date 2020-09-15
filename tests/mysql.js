@@ -24,6 +24,7 @@ var results = {
   create: -1,
   insert: -1,
   find: -1,
+  selectAll: -1,
   drop: -1,
   total: -1
 }
@@ -53,11 +54,19 @@ connection.query(tests.find,
   }
 )
 
+// Select all the data
+connection.query(tests.selectAll,
+  function (err, results2, fields) {
+    console.log(err ? err.stack : '')
+    results.selectAll = timer.elapsed - (results.insert + results.create + results.find)
+  }
+)
+
 // Drop the table
 connection.query(tests.drop,
   function (err, results2, fields) {
     if (err) console.error(err)
-    results.drop = timer.elapsed - (results.find + results.insert + results.create)
+    results.drop = timer.elapsed - (results.selectAll + results.find + results.insert + results.create)
     console.log('[RESULTS] MySQL'.green)
     results.total = timer.elapsed
     console.table(results)
