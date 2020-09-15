@@ -4,8 +4,7 @@
  *
  * Copyright (c) abcdan - All rights reserved.
  */
-
-console.log('[TESTING] PostgreSQL'.blue)
+console.log('[TESTING] Yugabyte'.blue)
 
 const PreciseTimer = require('precise-timer')
 const tests = require('../sql/tests')
@@ -15,9 +14,9 @@ const { Client } = require('pg')
 const client = new Client({
   user: 'postgres',
   host: 'localhost',
-  database: 'test',
-  password: 'testpassword',
-  port: 55432
+  database: 'postgres',
+  password: '',
+  port: 5433
 })
 
 client.connect()
@@ -54,7 +53,7 @@ client.query(tests.find, (err, res) => {
 client.query(tests.drop, (err, res) => {
   if (err) console.error(err.name)
   results.drop = timer.elapsed - (results.find + results.insert + results.create)
-  console.log('[RESULTS] PostgreSQL'.green)
+  console.log('[RESULTS] Yugabyte'.green)
   results.total = timer.elapsed
   console.table(results)
   client.end()

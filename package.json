@@ -21,6 +21,9 @@
   },
   "homepage": "https://github.com/abcdan/ipsene2-db-test#readme",
   "dependencies": {
+    "colors": "^1.4.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.1.0",
     "pg": "^8.3.3",
     "precise-timer": "^1.0.1"
   }
