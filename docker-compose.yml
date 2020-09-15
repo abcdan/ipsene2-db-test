@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  # yugabyte:
+  #   container_name: yugabyte
+  #   image: yugabytedb/yugabyte:latest
+  #   restart: always
+  #   ports:
+  #       - '7000:7000'
+  #       - '9000:9000'
+  #       - '5433:5433'
+  #       - '9042:9042'
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres-container
+    ports:
+      - 55432:5432/tcp
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_PASSWORD: testpassword

@@ -1,0 +1,26 @@
+{
+  "name": "ipsene2-db-test",
+  "version": "1.0.0",
+  "description": "A simple database testing tool written in Node.js",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abcdan/ipsene2-db-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abcdan/ipsene2-db-test/issues"
+  },
+  "homepage": "https://github.com/abcdan/ipsene2-db-test#readme",
+  "dependencies": {
+    "pg": "^8.3.3"
+  }
+}
