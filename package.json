@@ -7,6 +7,7 @@
     "test": "tests"
   },
   "scripts": {
+    "start": "node --max_old_space_size=10000 app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +23,7 @@
   "homepage": "https://github.com/abcdan/ipsene2-db-test#readme",
   "dependencies": {
     "colors": "^1.4.0",
+    "mariadb": "^2.4.2",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
     "pg": "^8.3.3",

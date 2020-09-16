@@ -5,7 +5,7 @@
  * Copyright (c) abcdan - All rights reserved.
  */
 
-console.log('[TESTING] MySQL'.blue)
+console.log('[TESTING] MariaDB'.blue)
 
 const PreciseTimer = require('precise-timer')
 const tests = require('../sql/tests')
@@ -15,9 +15,10 @@ const mysql = require('mysql2')
 
 const connection = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
+  user: 'test',
   database: 'test',
-  password: '',
+  password: 'testpassword',
+  port: 3307,
   insecureAuth: true
 })
 
@@ -73,7 +74,7 @@ connection.query(tests.drop,
   function (err, results2, fields) {
     if (settings.errors) console.log(err)
     results.drop = timer.elapsed - (results.selectAll + results.find + results.insert + results.create)
-    console.log('[RESULTS] MySQL'.green)
+    console.log('[RESULTS] MariaDB'.green)
     results.total = timer.elapsed
     console.table(calcResults())
     connection.close()

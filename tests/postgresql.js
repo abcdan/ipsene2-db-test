@@ -9,6 +9,7 @@ console.log('[TESTING] PostgreSQL'.blue)
 
 const PreciseTimer = require('precise-timer')
 const tests = require('../sql/tests')
+const settings = require('../sql/settings')
 
 const { Client } = require('pg')
 
@@ -38,34 +39,49 @@ client.query(tests.create_postgres, (err, res) => {
 })
 
 // 100 times the same query
-for (let i = 0; i < 10000; i++) {
+for (let i = 0; i < settings.amount; i++) {
   client.query(tests.insert, (err, res) => {
-    if (err) console.error(err.name)
+    if (settings.errors) console.log(err)
     results.insert = timer.elapsed - results.create
   })
 }
 
 // Find one thing
-client.query(tests.find, (err, res) => {
-  console.log(err ? err.stack : '')
-  results.find = timer.elapsed - (results.insert + results.create)
-})
+for (let i = 0; i < settings.amount; i++) {
+  client.query(tests.find, (err, res) => {
+    if (settings.errors) console.log(err)
+    results.find = timer.elapsed - (results.insert + results.create)
+  })
+}
 
 // Select all the data
-client.query(tests.selectAll, (err, res) => {
-  console.log(err ? err.stack : '')
-  results.selectAll = timer.elapsed - (results.insert + results.create + results.find)
-})
+for (let i = 0; i < settings.amount; i++) {
+  client.query(tests.selectAll, (err, res) => {
+    if (settings.errors) console.log(err)
+    results.selectAll = timer.elapsed - (results.insert + results.create + results.find)
+  })
+}
 
 // Drop the table
 client.query(tests.drop, (err, res) => {
-  if (err) console.error(err.name)
+  if (settings.errors) console.log(err)
   results.drop = timer.elapsed - (results.selectAll + results.find + results.insert + results.create)
   console.log('[RESULTS] PostgreSQL'.green)
   results.total = timer.elapsed
-  console.table(results)
+  console.table(calcResults())
   client.end()
 })
+
+function calcResults () {
+  return {
+    create: results.create / settings.amount,
+    insert: results.insert / settings.amount,
+    find: results.find / settings.amount,
+    selectAll: results.selectAll / settings.amount,
+    drop: results.drop / settings.amount,
+    total: results.total
+  }
+}
 
 module.export = {
   results

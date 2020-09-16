@@ -56,6 +56,19 @@ services:
     volumes:
       - my-db:/var/lib/mysql
 
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_USER: test
+      MYSQL_PASSWORD: testpassword
+      MYSQL_DATABASE: test
+      MYSQL_ROOT_PASSWORD: test
+    ports:
+    - "3307:3306"
+    expose:
+    - 3306
+
 volumes:
   yb-master-data-1:
   yb-tserver-data-1:
