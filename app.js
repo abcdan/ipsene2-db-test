@@ -6,7 +6,14 @@
  */
 require('colors')
 
+/**
+ * For sure winning
+ */
 require('./tests/postgresql')
 require('./tests/yugabyte')
 require('./tests/mysql')
-require('./tests/mariadb')
+
+/**
+ * Experimental
+ */
+// require('./tests/mariadb')

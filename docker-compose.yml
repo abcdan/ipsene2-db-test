@@ -60,10 +60,10 @@ services:
     image: mariadb
     restart: always
     environment:
-      MYSQL_USER: test
-      MYSQL_PASSWORD: testpassword
       MYSQL_DATABASE: test
-      MYSQL_ROOT_PASSWORD: test
+      MYSQL_USER: tester
+      MYSQL_PASSWORD: testpassword
+      MYSQL_ROOT_PASSWORD: testpassword
     ports:
     - "3307:3306"
     expose:

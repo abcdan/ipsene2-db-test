@@ -28,6 +28,7 @@ var results = {
   find: -1,
   selectAll: -1,
   drop: -1,
+  update: -1,
   total: -1
 }
 // Create the test table
@@ -47,9 +48,17 @@ for (let i = 0; i < settings.amount; i++) {
 
 // Find one thing
 for (let i = 0; i < settings.amount; i++) {
-  client.query(tests.find, (err, res) => {
+  client.query(tests.findInject.replace('XXXID', i), (err, res) => {
     if (settings.errors) console.log(err)
     results.find = timer.elapsed - (results.insert + results.create)
+  })
+}
+
+// update all
+for (let i = 0; i < settings.amount; i++) {
+  client.query(tests.updateInject.replace('XXXID', i), (err, res) => {
+    if (settings.errors) console.log(err)
+    results.update = timer.elapsed - (results.insert + results.create + results.find)
   })
 }
 
@@ -57,14 +66,14 @@ for (let i = 0; i < settings.amount; i++) {
 for (let i = 0; i < settings.amount; i++) {
   client.query(tests.selectAll, (err, res) => {
     if (settings.errors) console.log(err)
-    results.selectAll = timer.elapsed - (results.insert + results.create + results.find)
+    results.selectAll = timer.elapsed - (results.insert + results.create + results.find + results.update)
   })
 }
 
 // Drop the table
 client.query(tests.drop, (err, res) => {
   if (settings.errors) console.log(err)
-  results.drop = timer.elapsed - (results.selectAll + results.find + results.insert + results.create)
+  results.drop = timer.elapsed - (results.selectAll + results.find + results.insert + results.create + results.update)
   console.log('[RESULTS] Yugabyte'.green)
   results.total = timer.elapsed
   console.table(calcResults())
@@ -78,6 +87,7 @@ function calcResults () {
     find: results.find / settings.amount,
     selectAll: results.selectAll / settings.amount,
     drop: results.drop / settings.amount,
+    update: results.update / settings.amount,
     total: results.total
   }
 }

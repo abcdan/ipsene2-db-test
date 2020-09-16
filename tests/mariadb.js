@@ -14,12 +14,11 @@ const settings = require('../sql/settings')
 const mysql = require('mysql2')
 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'test',
+  host: '127.0.0.1',
+  user: 'tester',
   database: 'test',
   password: 'testpassword',
-  port: 3307,
-  insecureAuth: true
+  port: 3307
 })
 
 var results = {
@@ -28,6 +27,7 @@ var results = {
   find: -1,
   selectAll: -1,
   drop: -1,
+  update: -1,
   total: -1
 }
 
@@ -59,12 +59,21 @@ for (let i = 0; i < settings.amount; i++) {
   )
 }
 
+for (let i = 0; i < settings.amount; i++) {
+  connection.query(tests.updateInject.replace('XXXID', i),
+    function (err, results2, fields) {
+      if (settings.errors) console.log(err)
+      results.update = timer.elapsed - (results.insert + results.create + results.find)
+    }
+  )
+}
+
 // Select all the data
 for (let i = 0; i < settings.amount; i++) {
   connection.query(tests.selectAll,
     function (err, results2, fields) {
       if (settings.errors) console.log(err)
-      results.selectAll = timer.elapsed - (results.insert + results.create + results.find)
+      results.selectAll = timer.elapsed - (results.insert + results.create + results.find + results.update)
     }
   )
 }
@@ -73,7 +82,7 @@ for (let i = 0; i < settings.amount; i++) {
 connection.query(tests.drop,
   function (err, results2, fields) {
     if (settings.errors) console.log(err)
-    results.drop = timer.elapsed - (results.selectAll + results.find + results.insert + results.create)
+    results.drop = timer.elapsed - (results.selectAll + results.find + results.insert + results.create + results.update)
     console.log('[RESULTS] MariaDB'.green)
     results.total = timer.elapsed
     console.table(calcResults())
@@ -88,6 +97,7 @@ function calcResults () {
     find: results.find / settings.amount,
     selectAll: results.selectAll / settings.amount,
     drop: results.drop / settings.amount,
+    update: results.update / settings.amount,
     total: results.total
   }
 }

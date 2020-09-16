@@ -5,5 +5,6 @@ module.exports = {
   find: 'SELECT * FROM test WHERE userid = 6666;',
   findInject: 'SELECT * FROM test WHERE userid = XXXID;',
   selectAll: 'SELECT * from test',
+  updateInject: `UPDATE test SET name = '${'c'.repeat(100)}', lastname = '${'q'.repeat(100)}' WHERE userid = XXXID;`,
   drop: 'DROP TABLE test;'
 }
