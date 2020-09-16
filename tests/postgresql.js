@@ -27,9 +27,9 @@ var results = {
   create: -1,
   insert: -1,
   find: -1,
+  update: -1,
   selectAll: -1,
   drop: -1,
-  update: -1,
   total: -1
 }
 // Create the test table
@@ -85,9 +85,9 @@ function calcResults () {
     create: results.create / settings.amount,
     insert: results.insert / settings.amount,
     find: results.find / settings.amount,
+    update: results.update / settings.amount,
     selectAll: results.selectAll / settings.amount,
     drop: results.drop / settings.amount,
-    update: results.update / settings.amount,
     total: results.total
   }
 }

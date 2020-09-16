@@ -4,11 +4,14 @@
  *
  * Copyright (c) abcdan - All rights reserved.
  */
+
 require('colors')
+const settings = require('./sql/settings')
 
 /**
- * For sure winning
+ * Stable tests
  */
+console.log('[INFO] Dataset size: '.yellow + settings.amount)
 require('./tests/postgresql')
 require('./tests/yugabyte')
 require('./tests/mysql')
