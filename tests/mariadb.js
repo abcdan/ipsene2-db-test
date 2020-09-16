@@ -31,6 +31,10 @@ var results = {
   total: -1
 }
 
+var checkResults = {
+  uniqueSuccess: false
+}
+
 // Create the test table
 const timer = new PreciseTimer({ decimals: 6 })
 connection.query(tests.create_mysql,
@@ -85,10 +89,25 @@ connection.query(tests.drop,
     results.drop = timer.elapsed - (results.selectAll + results.find + results.insert + results.create + results.update)
     console.log('[RESULTS] MariaDB'.green)
     results.total = timer.elapsed
-    console.table(calcResults())
-    connection.close()
   }
 )
+
+connection.query(tests.uniqueCreate_mysql,
+  function (err, results2, fields) {
+    if (settings.errors) console.log(err)
+  })
+
+connection.query(tests.uniqueInsert,
+  function (err, results2, fields) {
+    if (settings.errors) console.log(err)
+  })
+
+connection.query(tests.uniqueInsert,
+  function (err, results2, fields) {
+    if (err) checkResults.uniqueSuccess = true
+    console.table(calcResults())
+    connection.close()
+  })
 
 function calcResults () {
   return {

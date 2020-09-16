@@ -32,6 +32,11 @@ var results = {
   drop: -1,
   total: -1
 }
+
+var checkResults = {
+  uniqueSuccess: false
+}
+
 // Create the test table
 const timer = new PreciseTimer({ decimals: 6 })
 client.query(tests.create_postgres, (err, res) => {
@@ -76,7 +81,23 @@ client.query(tests.drop, (err, res) => {
   results.drop = timer.elapsed - (results.selectAll + results.find + results.insert + results.create + results.update)
   console.log('[RESULTS] PostgreSQL'.green)
   results.total = timer.elapsed
+})
+
+// Unique Create
+client.query(tests.uniqueCreate_postgres, (err, res) => {
+  if (err) console.error(err.name)
+})
+
+// Should succeed
+client.query(tests.uniqueInsert, (err, res) => {
+  if (err) console.error(err.name)
+})
+
+// Should fail
+client.query(tests.uniqueInsert, (err, res) => {
+  if (err) checkResults.uniqueSuccess = true
   console.table(calcResults())
+  console.table(checkResults)
   client.end()
 })
 
