@@ -1,4 +1,4 @@
 module.exports = {
-  amount: 100,
+  amount: 5000,
   errors: false
 }

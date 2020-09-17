@@ -111,11 +111,11 @@ connection.query(tests.uniqueInsert,
 
 function calcResults () {
   return {
-    create: results.create / settings.amount,
+    create: results.create,
     insert: results.insert / settings.amount,
     find: results.find / settings.amount,
     selectAll: results.selectAll / settings.amount,
-    drop: results.drop / settings.amount,
+    drop: results.drop,
     update: results.update / settings.amount,
     total: results.total
   }
