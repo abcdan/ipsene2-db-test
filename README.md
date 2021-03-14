@@ -1,3 +1,5 @@
+⚠ This code was rushed to do a simple test for a school project. It's not recommend to use this in the real world.
+
 # ipsene2-db-test
 A simple database testing tool written in Node.js
 
